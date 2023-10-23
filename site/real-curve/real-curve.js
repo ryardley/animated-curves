@@ -1,12 +1,12 @@
-let curveA = -11;
-let curveB = 13;
-let baseX = 0.58;
+let curveA = -1;
+let curveB = 1;
+let baseX = 0.5;
 
 /**
  * @return {Point} base point
  */
 function P() {
-    return { x: baseX, y: y(baseX) };
+  return { x: baseX, y: y(baseX) };
 }
 
 /**
@@ -15,7 +15,7 @@ function P() {
  * @return {Number|NaN} y-coordinate (positive) if defined by curve
  */
 function y(x) {
-    return Math.sqrt(x**3 + curveA*x + curveB);
+  return Math.sqrt(x ** 3 + curveA * x + curveB);
 }
 
 /**
@@ -25,19 +25,19 @@ function y(x) {
  * @return {Point} R such that P + Q = -R
  */
 function add(P, Q) {
-    if (!P) return Q;
-    if (!Q) return P;
-    if (P.x === Q.x && P.y !== Q.y) {
-        return NaN;
-    }
-    const m = slope(P, Q);
-    if (Number.isNaN(m)) {
-        return NaN;
-    }
+  if (!P) return Q;
+  if (!Q) return P;
+  if (P.x === Q.x && P.y !== Q.y) {
+    return NaN;
+  }
+  const m = slope(P, Q);
+  if (Number.isNaN(m)) {
+    return NaN;
+  }
 
-    const x = m ** 2 - P.x - Q.x;
-    const y = P.y + m * (x - P.x);
-    return { x, y: -y };
+  const x = m ** 2 - P.x - Q.x;
+  const y = P.y + m * (x - P.x);
+  return { x, y: -y };
 }
 
 /**
@@ -46,7 +46,7 @@ function add(P, Q) {
  * @return {Point} the negated point
  */
 function negate(point) {
-    return {x: point.x, y: -point.y};
+  return { x: point.x, y: -point.y };
 }
 
 /**
@@ -56,21 +56,15 @@ function negate(point) {
  * @return {Number}
  */
 function slope(P, Q) {
-    if (Q.x === P.x && Q.y !== P.y) {
-        return Infinity;
-    }
-    if (P.x === Q.x) {
-        // doubling: slope is a tangent
-        return (3 * P.x * P.x + curveA) / (2 * P.y);
-    } else {
-        return (P.y - Q.y) / (P.x - Q.x);
-    }
+  if (Q.x === P.x && Q.y !== P.y) {
+    return Infinity;
+  }
+  if (P.x === Q.x) {
+    // doubling: slope is a tangent
+    return (3 * P.x * P.x + curveA) / (2 * P.y);
+  } else {
+    return (P.y - Q.y) / (P.x - Q.x);
+  }
 }
 
-export {
-    y,
-    P,
-    add,
-    negate,
-    slope,
-};
+export { y, P, add, negate, slope };
